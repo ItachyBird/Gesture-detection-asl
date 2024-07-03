@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>gesture detection and emotion based music Recommender</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    #splashScreen {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+
+
+  </style>
+</head>
+<body>
+  <div id="splashScreen">
+    <img src="https://i.pinimg.com/originals/5a/c3/65/5ac3659684140aa60ceca491b48b8bb2.gif" alt="Loading...">
+  </div>
+
+  <div id="mainContent">
+    <div class="light">
+      <div class="wire"></div>
+      <div class="bulb">
+        <span></span>
+        <span></span>
+      </div>
+      <div class="wrap">
+        <h2 class="blub-heading" style="text-shadow: 0 0 10px white;">Gesture Detection</h2>
+
+        <div class="cn">
+          <img src="../static/asl.png" alt="Gesture Icon" class="gesture-icon">
+          <p class="gesture-text">Perform hand gestures to interact</p>
+        </div>
+
+
+        <div class="cn">
+          <div class="button-container">
+            <button onclick="toggleVideo('videoContainer2')">Detect Gesture</button>
+          </div>
+          <div id="videoContainer2" class="container" style="display: none;">
+            <button class="close-button" onclick="closeVideo('videoContainer2')">X</button>
+            <h1>Gesture Recognition 2</h1>
+            <img id="videoElement2" src="{{ url_for('video_feed') }}">
+          </div>
+        </div>
+
+
+
+        <div class="other">
+          <h1 style="color: white;">What our website provides:</h1>
+          <p>Our website offers cutting-edge gesture detection technology, allowing users to interact with devices and applications using intuitive hand movements. Whether you're a developer looking to integrate gesture control into your projects or an enthusiast eager to explore the possibilities of hands-free interaction, our platform provides the tools and resources you need to harness the power of gesture recognition.</p>
+
+        </div>
+
+        <div class="other">
+          <h1 style="color: white;">Ideas or suggestions</h1>
+          <form>
+            <input type="text" id="suggestionInput" placeholder="Enter your idea or suggestion">
+            <button type="button" onclick="sendSuggestion()">Send</button>
+          </form>
+        </div>
+
+        <div class="other">
+          <p><li>Our gesture detection system is currently in development, with six signs already implemented and more to come!</li>
+          <li> Check the button below for a Mood based music recommender</li>
+        <li>Enjoy</li></p>
+        </div>
+
+        <button class="toggle-button" onclick="toggleElements()">Working</button>
+<div class="elements" style="overflow: hidden;">
+    <div class="heading" id="headingSection">
+        <h2>Gesture Recognition</h2>
+    </div>
+    <div class="info" id="infoSection">
+        <ol>
+            <li><strong>Import Libraries and Set Up Environment:</strong> Import necessary libraries like OpenCV, MediaPipe, and others required for gesture recognition.</li>
+            <li><strong>Initialize Parameters:</strong> Set parameters for the collection such as the action being performed, starting folder, number of sequences (videos), and the length of each sequence (number of frames).</li>
+            <li><strong>Capture Video:</strong> Open the webcam for capturing video frames.</li>
+            <li><strong>Set MediaPipe Model:</strong> Initialize the MediaPipe Holistic model for detecting and tracking holistic landmarks.</li>
+            <li><strong>Collect Data:</strong>
+                <ul>
+                    <li>Loop through sequences and frames.</li>
+                    <li>Capture each frame from the video.</li>
+                    <li>Process the frame using MediaPipe to get landmark results.</li>
+                    <li>Annotate the frame with landmarks and additional information.</li>
+                    <li>Save the extracted keypoints from the landmarks into a .npy file.</li>
+                </ul>
+            </li>
+            <li><strong>Display Frame:</strong> Show the annotated frame in a window.</li>
+            <li><strong>Terminate Capture:</strong> Release the video capture and destroy all OpenCV windows upon completion or interruption.</li>
+        </ol>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="cn">
+          <footer>
+            <div class="review-section">
+              <h3>Review</h3>
+              <p>What else can we add to make it better?</p>
+            </div>
+
+            <div class="social-media-section">
+              <h3>Social Media</h3>
+              <ul class="social-media-icons">
+                <li><a href="#" class="icon-facebook">Facebook</a></li>
+                <li><a href="#" class="icon-twitter">Twitter</a></li>
+                <li><a href="#" class="icon-instagram">Instagram</a></li>
+              </ul>
+            </div>
+
+            <div class="about-us-section">
+              <h3>About Us</h3>
+              <p>Information about your company or website.</p>
+            </div>
+          </footer>
+        </div>
+      </div>
+      <div class="switch">
+        <div class="btn"></div>
+      </div>
+    </div>
+  </div>
+  <audio id="audio" src="click.mp3" autostart="false"></audio>
+
+  <script>
+    let btn = document.querySelector('.btn');
+
+    btn.onclick = function() {
+      document.body.classList.toggle('on');
+      setTimeout(function() {
+        window.scrollTo({
+          top: document.querySelector('.wrap').offsetTop - 100,
+          behavior: 'smooth'
+        });
+      }, 300);
+    };
+
+    function toggleVideo(id) {
+      var container = document.getElementById(id);
+      if (container.style.display === "none") {
+        container.style.display = "block";
+        var windowHeight = window.innerHeight;
+        var containerTop = container.offsetTop;
+        var containerHeight = container.offsetHeight;
+        var scrollTo = containerTop - (windowHeight / 2) + (containerHeight / 2);
+        window.scrollTo({
+          top: scrollTo,
+          behavior: 'smooth'
+        });
+      } else {
+        container.style.display = "none";
+      }
+    }
+
+    function closeVideo(id) {
+      var container = document.getElementById(id);
+      container.style.display = "none";
+    }
+
+    function toggleElements() {
+      const headingSection = document.getElementById('headingSection');
+      const infoSection = document.getElementById('infoSection');
+      if (headingSection.style.display === 'none' || headingSection.style.display === '') {
+        headingSection.style.display = 'block';
+        headingSection.style.color = 'white';
+        headingSection.style.margin = '10px 0';
+        infoSection.style.display = 'block';
+      } else {
+        headingSection.style.display = 'none';
+        infoSection.style.display = 'none';
+      }
+    }
+
+    function sendSuggestion() {
+      var inputField = document.getElementById("suggestionInput");
+      inputField.value = "";
+    }
+
+    window.onload = function() {
+      setTimeout(function() {
+        document.getElementById('splashScreen').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+      }, 300); // Change the delay time as needed
+    };
+  </script>
+</body>
+</html>
